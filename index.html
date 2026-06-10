@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -15,6 +16,7 @@ body {
 .hero {
     background-image: url('https://media.vogue.com.tw/photos/68dbda5a221d9e83a276364e/2:3/w_2560%2Cc_limit/557637162_1381316683352217_7506352377307564150_n.jpg');
     background-size: cover;
+    background-position: center;
     height: 100vh;
     color: white;
     text-align: center;
@@ -61,15 +63,53 @@ img {
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
+    gap: 20px;
 }
+
 .member {
     background: white;
-    padding: 10px;
     border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    transition: 0.3s;
 }
-.aaa {
-    background-color: #80DFFF;
+
+.member:hover {
+    transform: scale(1.05);
+}
+
+.member img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.member p {
+    font-weight: bold;
+    margin: 10px;
+}
+
+/* 彈出視窗 */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background: white;
+    width: 70%;
+    max-width: 600px;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
 }
 </style>
 
@@ -94,21 +134,56 @@ img {
 
 <!-- 成員 -->
 <section>
-    <h2>成員介紹</h2>
+    <h2>成員介紹（點擊查看）</h2>
 
     <div class="grid">
 
-        <div class="member">娜璉 (Nayeon)</div>
-        <div class="member">定延 (Jeongyeon)</div>
-        <div class="member">Momo</div>
-        <div class="member">Sana</div>
-        <div class="member">志效 (Jihyo)</div>
-        <div class="member">Mina</div>
-        <div class="member">多賢 (Dahyun)</div>
-        <div class="member">彩瑛 (Chaeyoung)</div>
-        <div class="member">子瑜 (Tzuyu)</div>
+        <div class="member" onclick="showInfo('娜璉 Nayeon','1995年出生，TWICE 領唱與門面之一，擁有甜美笑容與活潑魅力。')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Im_Nayeon_2023.jpg">
+            <p>娜璉</p>
+        </div>
 
-  </div>
+        <div class="member" onclick="showInfo('定延 Jeongyeon','1996年出生，以穩定歌唱實力與帥氣形象受到喜愛。')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Yoo_Jeongyeon_2023.jpg">
+            <p>定延</p>
+        </div>
+
+        <div class="member" onclick="showInfo('Momo','來自日本京都，是 TWICE 的主舞擔當。')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Hirai_Momo_2023.jpg">
+            <p>Momo</p>
+        </div>
+
+        <div class="member" onclick="showInfo('Sana','來自日本大阪，以可愛魅力和高人氣聞名。')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Minatozaki_Sana_2023.jpg">
+            <p>Sana</p>
+        </div>
+
+        <div class="member" onclick="showInfo('志效 Jihyo','TWICE 隊長兼主唱，練習生時期超過十年。')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Park_Jihyo_2023.jpg">
+            <p>志效</p>
+        </div>
+
+        <div class="member" onclick="showInfo('Mina','來自日本兵庫縣，氣質優雅，擅長芭蕾舞。')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/92/Myoui_Mina_2023.jpg">
+            <p>Mina</p>
+        </div>
+
+        <div class="member" onclick="showInfo('多賢 Dahyun','團體中的氣氛製造者，綜藝感十足。')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Kim_Dahyun_2023.jpg">
+            <p>多賢</p>
+        </div>
+
+        <div class="member" onclick="showInfo('彩瑛 Chaeyoung','擅長饒舌與創作，擁有鮮明個人風格。')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/58/Son_Chaeyoung_2023.jpg">
+            <p>彩瑛</p>
+        </div>
+
+        <div class="member" onclick="showInfo('周子瑜 Tzuyu','來自台灣台南，是團體忙內與門面擔當之一。')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Chou_Tzuyu_2023.jpg">
+            <p>子瑜</p>
+        </div>
+
+    </div>
 </section>
 
 <!-- 歌曲 -->
@@ -122,13 +197,35 @@ img {
     </div>
 </section>
 
-<!-- 圖片 -->
+<!-- 團體照片 -->
 <section>
     <div class="box">
         <h2>團體照片</h2>
         <img src="https://i.kfs.io/artist/global/4330967,0v31/fit/500x500.jpg">
     </div>
 </section>
+
+<!-- Popup -->
+<div class="popup" id="popup" onclick="closePopup()">
+    <div class="popup-content" onclick="event.stopPropagation()">
+        <h2 id="popupTitle"></h2>
+        <p id="popupText"></p>
+        <br>
+        <button onclick="closePopup()">關閉</button>
+    </div>
+</div>
+
+<script>
+function showInfo(name, info) {
+    document.getElementById("popupTitle").innerHTML = name;
+    document.getElementById("popupText").innerHTML = info;
+    document.getElementById("popup").style.display = "flex";
+}
+
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+}
+</script>
 
 </body>
 </html>
